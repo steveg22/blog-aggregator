@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-//  "db_url": "postgres://myuser:mypassword@192.168.1.210:5432/mydatabase",
+//  "db_url": "postgres://myuser:mypassword@192.168.1.210:5432/gator",
 
 const configFileName = ".gatorconfig.json"
 
