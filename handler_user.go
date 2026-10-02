@@ -56,30 +56,18 @@ func handlerLogin(s *state, cmd command) error {
 	return nil
 }
 
-func handlerUsers(s *state, cmd command) error {
+func handlerListUsers(s *state, cmd command) error {
 	users, err := s.db.GetUsers(context.Background())
 	if err != nil {
-		return fmt.Errorf("Unable to get users: %w", err)
+		return fmt.Errorf("couldn't list users: %w", err)
 	}
-	currentUser := s.cfg.CurrentUserName
-	fmt.Println("The current user is", currentUser)
-
 	for _, user := range users {
-		fmt.Printf("- %v", user.Name)
-		if user.Name == currentUser {
-			fmt.Printf(" (current)")
+		if user.Name == s.cfg.CurrentUserName {
+			fmt.Printf("* %v (current)\n", user.Name)
+			continue
 		}
-		fmt.Printf("\n")
+		fmt.Printf("* %v\n", user.Name)
 	}
-	return nil
-}
-
-func handlerReset(s *state, cmd command) error {
-	err := s.db.DeleteUsers(context.Background())
-	if err != nil {
-		return fmt.Errorf("couldn't delete users: %w", err)
-	}
-	fmt.Println("Database reset successfully!")
 	return nil
 }
 
